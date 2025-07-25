@@ -1,9 +1,16 @@
-CC ?= tcc
+CC = tcc
 CFLAGS = -Wall -g
-LDFLAGS = -static
+LDFLAGS = -static -Lmusl/lib
 
-base: base.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+base: base.o musl/lib
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
+
+.c.o:
+	$(CC) -c $(CFLAGS) $<
+
+musl/lib: musl
+	cd musl && ./configure
+	make -C musl
 
 clean:
-	rm -f base
+	rm -f *.o base
