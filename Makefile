@@ -30,5 +30,6 @@ install: base
 	$(CC) -c $(CFLAGS) $<
 
 musl/lib: musl
+	git submodule update --init musl
 	cd musl && ./configure
 	make -C musl
