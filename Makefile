@@ -3,6 +3,7 @@ CFLAGS = -Wall -g
 LDFLAGS = -static -Lmusl/lib
 
 PREFIX = $(HOME)/.local/bin
+TAG = $(shell git describe --tags --abbrev=0)
 
 SRC = base.c
 OBJ = $(SRC:.c=.o)
@@ -25,6 +26,10 @@ test: base test.o
 install: base
 	mkdir -p $(PREFIX)
 	cp -f base $(PREFIX)
+
+.PHONY: release
+release: base
+	cp base base-$(TAG)-linux-amd64
 
 .c.o:
 	$(CC) -c $(CFLAGS) $<
