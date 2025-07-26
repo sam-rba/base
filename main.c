@@ -16,7 +16,7 @@ enum {ARGC = 3};
 
 const char usage[] =
 	"Usage: base -<base><base> <n>\n"
-	"base ::= b | o | d | h | x\n"
+	"base ::= b | o | d | x\n"
 	"	b - binary\n"
 	"	o - octal\n"
 	"	d - decimal\n"

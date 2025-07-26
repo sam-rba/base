@@ -2,18 +2,13 @@ CC = tcc
 CFLAGS = -Wall -g
 LDFLAGS = -static -Lmusl/lib
 
+PREFIX = $(HOME)/.local/bin
+
 SRC = base.c
 OBJ = $(SRC:.c=.o)
 
 base: $(OBJ) main.o musl/lib
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJ) main.o
-
-.c.o:
-	$(CC) -c $(CFLAGS) $<
-
-musl/lib: musl
-	cd musl && ./configure
-	make -C musl
 
 .PHONY: clean
 clean:
@@ -25,3 +20,15 @@ test: base test.o
 	./test
 	awk -f test.awk tests
 	@echo Success
+
+.PHONY: install
+install: base
+	mkdir -p $(PREFIX)
+	cp -f base $(PREFIX)
+
+.c.o:
+	$(CC) -c $(CFLAGS) $<
+
+musl/lib: musl
+	cd musl && ./configure
+	make -C musl
