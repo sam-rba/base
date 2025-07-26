@@ -1,21 +1,21 @@
-#include <assert.h>
+#include <stdint.h>
 #include <stdio.h>
 
 #include "base.h"
 
-static int status = 0;
+static Status status = OK;
 
 #define test(got, want, gotfmt, wantfmt) \
 	if ((got) != (want)) { \
 		fprintf(stderr, "Failure: %s:%d: got " #gotfmt "; want " #wantfmt "\n", \
 			__FILE__, __LINE__, (got), (want)); \
-		status = 1; \
+		status = FAIL; \
 	} \
 	(void)0
 
-static long unsigned int
-fill(int k) {
-	long unsigned int n = 0;
+static uint64_t
+fill(uint16_t k) {
+	uint64_t n = 0u;
 	while (k--) {
 		n |= (1lu << k);
 	}
@@ -24,15 +24,16 @@ fill(int k) {
 
 int
 main(void) {
-	for (int k = 0; k < sizeof(long unsigned int)*8; k++) {
+	uint64_t n;
+	for (uint16_t k = 0u; k < bitsizeof(n); k++) {
 		test(highestOne(1lu << k), k, %d, %d);
 
-		long unsigned int n = fill(k+1);
+		n = fill(k+1u);
 		test(highestOne(n), k, %d, %d);
 	}
 
-	test(highestOne(0), 0, %d, %d);
-	test(highestOne(1), 0, %d, %d);
+	test(highestOne(0u), 0u, %d, %d);
+	test(highestOne(1u), 0u, %d, %d);
 
 	return status;
 }

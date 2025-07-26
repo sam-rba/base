@@ -1,8 +1,10 @@
+#include <stdint.h>
+
 #include "base.h"
 
-int
-highestOne(long unsigned int n) {
-	int k = sizeof(n) * 8 - 1;
+uint16_t
+highestOne(uint64_t n) {
+	uint16_t k = bitsizeof(n) - 1u;
 	while ((k > 0) && !(n & (1lu << k))) {
 		k--;
 	}

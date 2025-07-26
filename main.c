@@ -1,15 +1,18 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "base.h"
 
-enum Base {
+typedef enum {
 	BIN,
 	OCT,
 	DEC,
 	HEX,
-};
+} Base;
+
+enum {ARGC = 3};
 
 const char usage[] =
 	"Usage: base -<base><base> <n>\n"
@@ -20,34 +23,34 @@ const char usage[] =
 	"	x - hexadecimal\n"
 	"n ::= a number";
 
-static int
-parseBase(char c, enum Base *base) {
+static Status
+parseBase(char c, Base *base) {
 	switch (c) {
 	case 'b': *base = BIN; break;
 	case 'o': *base = OCT; break;
 	case 'd': *base = DEC; break;
 	case 'x': *base = HEX; break;
-	default: return 1;
+	default: return FAIL;
 	}
-	return 0;
+	return OK;
 }
 
-static int
-parseBin(const char *s, long unsigned int *n) {
+static Status
+parseBin(const char *s, uint64_t *n) {
 	*n = 0;
 	while (*s != '\0') {
 		switch (*s) {
 		case '0': *n <<= 1; break;
 		case '1': *n = (*n << 1) | 1; break;
-		default: return 1;
+		default: return FAIL;
 		}
 		s++;
 	}
-	return 0;
+	return OK;
 }
 
-static int
-parseNum(enum Base base, const char *s, long unsigned int *n) {
+static Status
+parseNum(Base base, const char *s, uint64_t *n) {
 	const char *fmt;
 
 	switch (base) {
@@ -58,19 +61,19 @@ parseNum(enum Base base, const char *s, long unsigned int *n) {
 	default: abort();
 	}
 
-	return sscanf(s, fmt, n) != 1;
+	return (sscanf(s, fmt, n) == 1) ? OK : FAIL;
 }
 
 static void
-printBin(long unsigned int n) {
-	for (int k = highestOne(n); k >= 0; k--) {
-		putchar((n & (1 << k)) ? '1' : '0');
+printBin(uint64_t n) {
+	for (int16_t k = highestOne(n); k >= 0; k--) {
+		putchar((n & (1lu << k)) ? '1' : '0');
 	}
 	putchar('\n');
 }
 
 static void
-printNum(long unsigned int n, enum Base base) {
+printNum(uint64_t n, Base base) {
 	switch (base) {
 	case BIN: printBin(n); break;
 	case OCT: printf("%lo\n", n); break;
@@ -82,29 +85,29 @@ printNum(long unsigned int n, enum Base base) {
 
 int
 main(int argc, char *argv[]) {
-	if ((argc != 3)) {
+	if ((argc != ARGC)) {
 		fprintf(stderr, "Wrong number of arguments.\n%s\n", usage);
-		return 1;
+		return FAIL;
 	}
 	if (strlen(argv[1]) != 3) {
 		fprintf(stderr, "Invalid argument: %s\n%s\n", argv[1], usage);
-		return 1;
+		return FAIL;
 	}
 
-	enum Base from, to;
-	if (parseBase(argv[1][1], &from) != 0) {
+	Base from, to;
+	if (parseBase(argv[1][1], &from) != OK) {
 		fprintf(stderr, "Invalid base: %c\n%s\n", argv[1][1], usage);
-		return 1;
+		return FAIL;
 	}
-	if (parseBase(argv[1][2], &to) != 0) {
+	if (parseBase(argv[1][2], &to) != OK) {
 		fprintf(stderr, "Invalid base: %c\n%s\n", argv[1][2], usage);
-		return 1;
+		return FAIL;
 	}
 
-	long unsigned int n;
-	if (parseNum(from, argv[2], &n) != 0) {
+	uint64_t n;
+	if (parseNum(from, argv[2], &n) != OK) {
 		fprintf(stderr, "Invalid number: %s\n", argv[2]);
-		return 1;
+		return FAIL;
 	}
 
 	printNum(n, to);
