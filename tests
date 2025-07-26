@@ -1,0 +1,219 @@
+# flag in out
+
+# no conversion
+-bb 0 0
+-bb 1 1
+-oo 0 0
+-oo 1 1
+-dd 0 0
+-dd 1 1
+-xx 0 0
+-xx 1 1
+-bb 01101 01101
+-oo 123 123
+-dd 123 123
+-xx 123ABCDEF 123ABCDEF
+
+# bin -> oct
+-bo 0 0
+-bo 1 1
+-bo 10 2
+-bo 11 3
+-bo 100 4
+-bo 101 5
+-bo 110 6
+-bo 111 7
+-bo 1000 10
+-bo 1010011 123
+
+# bin -> dec
+-bd 0 0
+-bd 1 1
+-bd 10 2
+-bd 11 3
+-bd 100 4
+-bd 101 5
+-bd 110 6
+-bd 111 7
+-bd 1000 8
+-bd 1001 9
+-bd 1010 10
+-bd 1111011 123
+
+# bin -> hex
+-bx 0 0
+-bx 1 1
+-bx 10 2
+-bx 11 3
+-bx 100 4
+-bx 101 5
+-bx 110 6
+-bx 111 7
+-bx 1000 8
+-bx 1001 9
+-bx 1010 A
+-bx 1011 B
+-bx 1100 C
+-bx 1101 D
+-bx 1110 E
+-bx 1111 F
+-bx 10000 10
+-bx 100100011110111101111 123DEF
+
+#oct -> bin
+-ob 0 0
+-ob 1 1
+-ob 2 10
+-ob 3 11
+-ob 4 100
+-ob 5 101
+-ob 6 110
+-ob 7 111
+-ob 10 1000
+-ob 123 1010011
+
+# oct -> dec
+-od 0 0
+-od 1 1
+-od 2 2
+-od 3 3
+-od 4 4
+-od 5 5
+-od 6 6
+-od 7 7
+-od 10 8
+-od 11 9
+-od 12 10
+-od 123 83
+
+# oct -> hex
+-ox 0 0
+-ox 1 1
+-ox 2 2
+-ox 3 3
+-ox 4 4
+-ox 5 5
+-ox 6 6
+-ox 7 7
+-ox 10 8
+-ox 11 9
+-ox 12 A
+-ox 13 B
+-ox 14 C
+-ox 15 D
+-ox 16 E
+-ox 17 F
+-ox 20 10
+-ox 4436757 123DEF
+
+# dec -> bin
+-db 0 0
+-db 1 1
+-db 2 10
+-db 3 11
+-db 4 100
+-db 5 101
+-db 6 110
+-db 7 111
+-db 8 1000
+-db 9 1001
+-db 10 1010
+-db 123 1111011
+
+# dec -> oct
+-do 0 0
+-do 1 1
+-do 2 2
+-do 3 3
+-do 4 4
+-do 5 5
+-do 6 6
+-do 7 7
+-do 8 10
+-do 9 11
+-do 10 12
+-do 123 173
+
+# dec -> hex
+-dx 0 0
+-dx 1 1
+-dx 2 2
+-dx 3 3
+-dx 4 4
+-dx 5 5
+-dx 6 6
+-dx 7 7
+-dx 8 8
+-dx 9 9
+-dx 10 A
+-dx 11 B
+-dx 12 C
+-dx 13 D
+-dx 14 E
+-dx 15 F
+-dx 16 10
+-dx 1195503 123DEF
+
+# hex -> bin
+-xb 0 0
+-xb 1 1
+-xb 2 10
+-xb 3 11
+-xb 4 100
+-xb 5 101
+-xb 6 110
+-xb 7 111
+-xb 8 1000
+-xb 9 1001
+-xb A 1010
+-xb B 1011
+-xb C 1100
+-xb D 1101
+-xb E 1110
+-xb F 1111
+-xb 10 10000
+-xb 123DEF 100100011110111101111
+
+# hex -> oct
+-xo 0 0
+-xo 1 1
+-xo 2 2
+-xo 3 3
+-xo 4 4
+-xo 5 5
+-xo 6 6
+-xo 7 7
+-xo 8 10
+-xo 9 11
+-xo A 12
+-xo B 13
+-xo C 14
+-xo D 15
+-xo E 16
+-xo F 17
+-xo 10 20
+-xo 123DEF 4436757
+
+# hex -> dec
+-xd 0 0
+-xd 1 1
+-xd 2 2
+-xd 3 3
+-xd 4 4
+-xd 5 5
+-xd 6 6
+-xd 7 7
+-xd 8 8
+-xd 9 9
+-xd A 10
+-xd B 11
+-xd C 12
+-xd D 13
+-xd E 14
+-xd F 15
+-xd 10 16
+-xd 123DEF 1195503
+
+# hex case
+-xx 123ABCDEF 123ABCDEF
+-xx 123abcdef 123ABCDEF
