@@ -1,0 +1,5 @@
+Unit-test parseBase(), parseBin(), and parseNum().
+More system tests.
+Flag to add prefix to output: 0b, 0o, 0x.
+Flag to toggle hex digit case.
+Accept input with prefix: 0b, 0o, 0x.
